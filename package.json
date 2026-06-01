@@ -1,0 +1,25 @@
+{
+  "name": "api-de-gerenciamento-de-biblioteca",
+  "version": "1.0.0",
+  "description": "Projeto API de biblioteca feito por maycon santos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayconSantos04/API-de-Gerenciamento-de-Biblioteca.git"
+  },
+  "author": "Maycon Santos",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/MayconSantos04/API-de-Gerenciamento-de-Biblioteca/issues"
+  },
+  "homepage": "https://github.com/MayconSantos04/API-de-Gerenciamento-de-Biblioteca#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
