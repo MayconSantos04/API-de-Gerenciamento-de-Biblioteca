@@ -32,4 +32,25 @@ export class BookController {
     console.log(this.datadb);
     return res.status(201).json(book);
   }
+
+  async update(req, res) {
+    const resultId = this.datadb.find((datadbs) => {
+      return datadbs.id === req.params.id;
+    });
+
+    const book = resultId;
+
+    const updatedBook = {
+      id: book.id,
+      ...req.body,
+    };
+
+    const findPosition = this.datadb.findIndex((index) => {
+      if (index === resultId) {
+        index.splice(index, 1, updatedBook);
+      }
+    });
+
+    return res.send();
+  }
 }
