@@ -2,11 +2,13 @@ import crypto from "node:crypto";
 export class BookController {
   datadb = [];
 
+  // Lista todos os livros
   async list(req, res) {
     const books = await this.datadb;
     res.send(books);
   }
 
+  // Lista livros específicos
   async listId(req, res) {
     const resultId = this.datadb.find((datadbs) => {
       return datadbs.id === req.params.id;
@@ -15,6 +17,7 @@ export class BookController {
     res.send(resultId);
   }
 
+  // Cria livros
   async create(req, res) {
     const { titulo, autor, genero, disponivel } = req.body;
     const randomUUID = crypto.randomUUID();
@@ -29,28 +32,28 @@ export class BookController {
 
     await this.datadb.push(book);
 
-    console.log(this.datadb);
     return res.status(201).json(book);
   }
 
+  // Edita livros
   async update(req, res) {
-    const resultId = this.datadb.find((datadbs) => {
+    const resultId = this.datadb.findIndex((datadbs) => {
       return datadbs.id === req.params.id;
     });
 
-    const book = resultId;
+    if (resultId === -1) {
+      return res.status(400).json({ message: "Não encontrado. " });
+    }
+
+    let book = this.datadb[resultId];
 
     const updatedBook = {
       id: book.id,
       ...req.body,
     };
 
-    const findPosition = this.datadb.findIndex((index) => {
-      if (index === resultId) {
-        index.splice(index, 1, updatedBook);
-      }
-    });
+    this.datadb[resultId] = updatedBook;
 
-    return res.send();
+    return res.send(this.datadb);
   }
 }
