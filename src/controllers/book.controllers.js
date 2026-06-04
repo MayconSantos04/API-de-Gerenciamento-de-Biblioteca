@@ -14,6 +14,10 @@ export class BookController {
       return datadbs.id === req.params.id;
     });
 
+    if (resultId === undefined) {
+      return res.status(400).json({ message: "Não encontrado. " });
+    }
+
     res.send(resultId);
   }
 
@@ -27,7 +31,7 @@ export class BookController {
       titulo: titulo,
       autor: autor,
       genero: genero,
-      disponivel: disponivel,
+      disponivel: true,
     };
 
     await this.datadb.push(book);
@@ -55,5 +59,20 @@ export class BookController {
     this.datadb[resultId] = updatedBook;
 
     return res.send(this.datadb);
+  }
+
+  //  Deleta livro
+  async remove(req, res) {
+    const resultId = this.datadb.findIndex((datadbs) => {
+      return datadbs.id === req.params.id;
+    });
+
+    if (resultId === -1) {
+      return res.status(400).json({ message: "Não encontrado. " });
+    }
+
+    this.datadb.splice(resultId, 1);
+
+    return res.status(200).send(this.datadb);
   }
 }
