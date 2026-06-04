@@ -13,6 +13,10 @@ export class LoanController {
     const { livroId, nomeAluno, devolvido } = req.body;
     const randomUUID = crypto.randomUUID();
 
+    const index = database.books.find((index) => {
+      return index.id === livroId;
+    });
+
     const lending = {
       id: randomUUID,
       livroId: livroId,
@@ -22,6 +26,7 @@ export class LoanController {
     };
 
     await database.loans.push(lending);
+    console.log(database.loans);
 
     return res.status(201).json(lending);
   }
