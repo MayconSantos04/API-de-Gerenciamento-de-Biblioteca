@@ -1,16 +1,15 @@
 import crypto from "node:crypto";
+import { database } from "../datadb.js";
 export class BookController {
-  datadb = [];
-
   // Lista todos os livros
   async list(req, res) {
-    const books = await this.datadb;
+    const books = await database.books;
     res.send(books);
   }
 
   // Lista livros específicos
   async listId(req, res) {
-    const resultId = this.datadb.find((datadbs) => {
+    const resultId = database.books.find((datadbs) => {
       return datadbs.id === req.params.id;
     });
 
@@ -34,14 +33,14 @@ export class BookController {
       disponivel: true,
     };
 
-    await this.datadb.push(book);
+    await database.books.push(book);
 
     return res.status(201).json(book);
   }
 
   // Edita livros
   async update(req, res) {
-    const resultId = this.datadb.findIndex((datadbs) => {
+    const resultId = database.books.findIndex((datadbs) => {
       return datadbs.id === req.params.id;
     });
 
@@ -49,21 +48,21 @@ export class BookController {
       return res.status(400).json({ message: "Não encontrado. " });
     }
 
-    let book = this.datadb[resultId];
+    let book = database.books[resultId];
 
     const updatedBook = {
       id: book.id,
       ...req.body,
     };
 
-    this.datadb[resultId] = updatedBook;
+    database.books[resultId] = updatedBook;
 
-    return res.send(this.datadb);
+    return res.send(database.books);
   }
 
   //  Deleta livro
   async remove(req, res) {
-    const resultId = this.datadb.findIndex((datadbs) => {
+    const resultId = database.books.findIndex((datadbs) => {
       return datadbs.id === req.params.id;
     });
 
@@ -71,8 +70,8 @@ export class BookController {
       return res.status(400).json({ message: "Não encontrado. " });
     }
 
-    this.datadb.splice(resultId, 1);
+    database.books.splice(resultId, 1);
 
-    return res.status(200).send(this.datadb);
+    return res.status(200).send(database.books);
   }
 }

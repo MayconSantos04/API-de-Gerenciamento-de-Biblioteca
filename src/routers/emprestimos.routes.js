@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { LoanController } from "../controllers/book.controllers.js";
+import { LoanController } from "../controllers/loan.controllers.js";
 
 export const loanRouter = Router();
 export const loanController = new LoanController();
 
-bookRouter.get("/books/loan", (req, res) => bookController.list(req, res));
-bookRouter.post("/books/loan", (req, res) => bookController.create(req, res));
-bookRouter.patch("/books/loan/:id/devolution", (req, res) => bookController.update(req, res));
+loanRouter.get("/books/loan", (req, res) => loanController.list(req, res));
+loanRouter.post("/books/loan", (req, res) => loanController.create(req, res));
+loanRouter.patch("/books/loan/:id/devolution", (req, res) => loanController.update(req, res));

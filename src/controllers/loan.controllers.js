@@ -1,11 +1,10 @@
 import crypto from "node:crypto";
+import { database } from "../datadb.js";
 
 export class LoanController {
-  datadb = [];
-
   // Lista todos os empréstimos
   async list(req, res) {
-    const lend = await this.datadb;
+    const lend = await database.loans;
     res.send(lend);
   }
 
@@ -22,7 +21,7 @@ export class LoanController {
       devolvido: false,
     };
 
-    await this.datadb.push(lending);
+    await database.loans.push(lending);
 
     return res.status(201).json(lending);
   }
