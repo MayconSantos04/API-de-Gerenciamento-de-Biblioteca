@@ -17,6 +17,10 @@ export class LoanController {
       return book.id === livroId;
     });
 
+    if (book === undefined) {
+      return res.status(400).json({ message: "Livro não encontrado." });
+    }
+
     const lending = {
       id: randomUUID,
       livroId: livroId,
