@@ -10,11 +10,11 @@ export class LoanController {
 
   // Cria um empréstimo
   async create(req, res) {
-    const { livroId, nomeAluno, devolvido } = req.body;
+    const { livroId, nomeAluno } = req.body;
     const randomUUID = crypto.randomUUID();
 
-    const index = database.books.find((index) => {
-      return index.id === livroId;
+    const book = database.books.find((book) => {
+      return book.id === livroId;
     });
 
     const lending = {
@@ -26,7 +26,6 @@ export class LoanController {
     };
 
     await database.loans.push(lending);
-    console.log(database.loans);
 
     return res.status(201).json(lending);
   }
