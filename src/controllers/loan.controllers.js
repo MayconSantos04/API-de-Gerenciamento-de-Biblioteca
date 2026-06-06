@@ -5,6 +5,7 @@ export class LoanController {
   // Lista todos os empréstimos
   async list(req, res) {
     const lend = await database.loans;
+    console.log(database.loans);
     res.send(lend);
   }
 
@@ -12,6 +13,17 @@ export class LoanController {
   async create(req, res) {
     const { livroId, nomeAluno } = req.body;
     const randomUUID = crypto.randomUUID();
+
+    if (
+      !livroId ||
+      livroId.trim() === "" ||
+      !nomeAluno ||
+      nomeAluno.trim() === ""
+    ) {
+      return res.status(400).json({
+        message: "Error. Não foi possível concluir. Dados incompletos.",
+      });
+    }
 
     const book = database.books.find((book) => {
       return book.id === livroId;
@@ -22,7 +34,7 @@ export class LoanController {
     }
 
     if (book.disponivel === false) {
-      return res.status(404).json({ message: "Livro não está disponível." });
+      return res.status(400).json({ message: "Livro não está disponível." });
     }
 
     const lending = {
@@ -48,7 +60,7 @@ export class LoanController {
     });
 
     if (!loanBook) {
-      return res.status(404).json({ message: "Expréstimo não encontado. " });
+      return res.status(404).json({ message: "Expréstimo não encontrado. " });
     }
 
     const book = database.books.find((book) => {

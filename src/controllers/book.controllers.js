@@ -14,7 +14,7 @@ export class BookController {
     });
 
     if (resultId === undefined) {
-      return res.status(400).json({ message: "Não encontrado. " });
+      return res.status(404).json({ message: "Não encontrado. " });
     }
 
     res.send(resultId);
@@ -22,14 +22,27 @@ export class BookController {
 
   // Cria livros
   async create(req, res) {
-    const { titulo, autor, genero, disponivel } = req.body;
+    const { titulo, autor, genero } = req.body;
     const randomUUID = crypto.randomUUID();
+
+    if (
+      !titulo ||
+      titulo.trim() === "" ||
+      !autor ||
+      autor.trim() === "" ||
+      !genero ||
+      genero.trim() === ""
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Error ao criar livro. (dados incompletos)." });
+    }
 
     const book = {
       id: randomUUID,
-      titulo: titulo,
-      autor: autor,
-      genero: genero,
+      titulo: titulo.trim(),
+      autor: autor.trim(),
+      genero: genero.trim(),
       disponivel: true,
     };
 
@@ -45,7 +58,7 @@ export class BookController {
     });
 
     if (resultId === -1) {
-      return res.status(400).json({ message: "Não encontrado. " });
+      return res.status(404).json({ message: "Não encontrado. " });
     }
 
     let book = database.books[resultId];
@@ -72,6 +85,6 @@ export class BookController {
 
     database.books.splice(resultId, 1);
 
-    return res.status(200).send(database.books);
+    return res.status(204).send(database.books);
   }
 }
