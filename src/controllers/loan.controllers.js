@@ -52,6 +52,8 @@ export class LoanController {
     return res.status(201).json(lending);
   }
 
+  // Atualiza status de devolvido
+
   async updateDevolution(req, res) {
     const { id } = req.params;
 
