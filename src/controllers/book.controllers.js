@@ -85,6 +85,6 @@ export class BookController {
 
     database.books.splice(resultId, 1);
 
-    return res.status(204).send(database.books);
+    return res.status(200).send(database.books);
   }
 }

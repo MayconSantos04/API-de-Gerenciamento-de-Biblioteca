@@ -148,7 +148,7 @@ bookRouter.put("/books/:id", (req, res) => bookController.update(req, res));
  *         schema:
  *           type: string
  *     responses:
- *       204:
+ *       200:
  *         description: Livro removido com sucesso
  *       400:
  *         description: Livro não encontrado
