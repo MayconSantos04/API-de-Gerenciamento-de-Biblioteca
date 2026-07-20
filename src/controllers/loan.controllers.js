@@ -68,6 +68,8 @@ export class LoanController {
   async updateDevolution(req, res) {
     const { id } = req.params;
 
+    const loanIndex = database.loans.findIndex((loan) => loan.id === id);
+
     const loanBook = database.loans.find((loan) => {
       return loan.id === id;
     });
@@ -86,6 +88,7 @@ export class LoanController {
 
     loanBook.devolvido = true;
     book.disponivel = true;
+    database.loans.splice(loanIndex, 1);
 
     return res.status(200).json(loanBook);
   }
