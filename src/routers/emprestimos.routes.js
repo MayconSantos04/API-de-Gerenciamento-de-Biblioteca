@@ -23,15 +23,23 @@ export const loanController = new LoanController();
  *                 properties:
  *                   id:
  *                     type: string
+ *                     example: "c1f7a2d8-4f2a-4c28-8d01-1e23f1234567"
  *                   livroId:
  *                     type: string
+ *                     example: "b123"
+ *                   livroTitulo:
+ *                     type: string
+ *                     example: "Dom Casmurro"
  *                   nomeAluno:
  *                     type: string
+ *                     example: "Maycon Santos"
  *                   dataEmprestimo:
  *                     type: string
  *                     format: date-time
+ *                     example: "2026-07-20T13:50:45.773Z"
  *                   devolvido:
  *                     type: boolean
+ *                     example: false
  */
 loanRouter.get("/loan", (req, res) => loanController.list(req, res));
 

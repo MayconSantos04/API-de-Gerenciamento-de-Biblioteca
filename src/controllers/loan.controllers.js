@@ -4,9 +4,20 @@ import { database } from "../datadb.js";
 export class LoanController {
   // Lista todos os empréstimos
   async list(req, res) {
-    const lend = await database.loans;
-    console.log(database.loans);
-    res.send(lend);
+    const loansWithBook = database.loans.map((loan) => {
+      const book = database.books.find((b) => b.id === loan.livroId);
+
+      return {
+        id: loan.id,
+        livroId: loan.livroId,
+        nomeAluno: loan.nomeAluno,
+        dataEmprestimo: loan.dataEmprestimo,
+        devolvido: loan.devolvido,
+        livroTitulo: book ? book.titulo : "Livro não encontrado",
+      };
+    });
+
+    return res.json(loansWithBook);
   }
 
   // Cria um empréstimo
